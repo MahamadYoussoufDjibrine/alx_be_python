@@ -1,6 +1,6 @@
 # hours_to_seconds.py
 
-hours = float(input("Enter hours: "))
+hours = 2
 seconds = hours * 3600
-print(f"{hours} hours is equal to {seconds} seconds")
+print(f"{hours} hour(s) is {seconds} seconds")
     
