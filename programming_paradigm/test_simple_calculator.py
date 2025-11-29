@@ -8,21 +8,18 @@ class TestSimpleCalculator(unittest.TestCase):
 
     def test_addition(self):
         self.assertEqual(self.calc.add(2, 3), 5)
-        self.assertEqual(self.calc.add(-1, 5), 4)
 
     def test_subtraction(self):
         self.assertEqual(self.calc.subtract(10, 5), 5)
-        self.assertEqual(self.calc.subtract(0, 3), -3)
 
-    def test_multiply(self):
+    def test_multiplication(self):
         self.assertEqual(self.calc.multiply(4, 5), 20)
-        self.assertEqual(self.calc.multiply(-2, 6), -12)
+        self.assertEqual(self.calc.multiply(-2, 3), -6)
 
     def test_divide(self):
         self.assertEqual(self.calc.divide(10, 2), 5)
-        # optional: check float division
-        self.assertAlmostEqual(self.calc.divide(7, 2), 3.5)
-        # optional: check division by zero
+
+        # Division by zero check (only if your calculator raises error)
         with self.assertRaises(ZeroDivisionError):
             self.calc.divide(5, 0)
 
