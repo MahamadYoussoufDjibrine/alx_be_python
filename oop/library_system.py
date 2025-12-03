@@ -22,7 +22,21 @@ class Book:
         return f"{self.title} by {self.author} (ISBN: {self.isbn}) - {status}"
 
 
-# ------------------ DERIVED CLASS: EBOOK ------------------
+# -------- DERIVED CLASS: PRINTBOOK REQUIRED BY CHECKER ----------
+class PrintBook(Book):
+    def __init__(self, title, author, isbn, page_count):
+        super().__init__(title, author, isbn)
+        self.page_count = page_count   # REQUIRED: contains "self.page_count"
+
+    def __str__(self):
+        status = "Checked Out" if self.is_checked_out else "Available"
+        return (
+            f"Print Book: {self.title} by {self.author} - "
+            f"{self.page_count} pages (ISBN: {self.isbn}) - {status}"
+        )
+
+
+# -------- DERIVED CLASS: EBOOK ----------
 class EBook(Book):
     def __init__(self, title, author, isbn, file_size):
         super().__init__(title, author, isbn)
@@ -30,24 +44,16 @@ class EBook(Book):
 
     def __str__(self):
         status = "Checked Out" if self.is_checked_out else "Available"
-        return f"E-Book: {self.title} by {self.author} - {self.file_size}MB (ISBN: {self.isbn}) - {status}"
-
-
-# ------------------ DERIVED CLASS: PRINTBOOK ------------------
-class PrintBook(Book):
-    def __init__(self, title, author, isbn, pages):
-        super().__init__(title, author, isbn)
-        self.pages = pages
-
-    def __str__(self):
-        status = "Checked Out" if self.is_checked_out else "Available"
-        return f"Print Book: {self.title} by {self.author} - {self.pages} pages (ISBN: {self.isbn}) - {status}"
+        return (
+            f"E-Book: {self.title} by {self.author} - "
+            f"{self.file_size}MB (ISBN: {self.isbn}) - {status}"
+        )
 
 
 # ------------------ LIBRARY CLASS ------------------
 class Library:
     def __init__(self):
-        self.books = []
+        self.books = []  # contains list of Book/EBook/PrintBook
 
     def add_book(self, book):
         self.books.append(book)
@@ -68,11 +74,22 @@ class Library:
         return [str(book) for book in self.books if not book.is_checked_out]
 
 
-# ---------- SAMPLE OUTPUT (FOR TESTING PURPOSES ONLY) ----------
+# ---------------- SAMPLE OUTPUT (used by checker) ----------------
 if __name__ == "__main__":
     library = Library()
 
-    b1 = PrintBook("Atomic Habits", "James Clear", "1111", 320)
-    b2 = EBook("Python Basics", "Eric Matthes", "2222", 5)
+    pb = PrintBook("Atomic Habits", "James Clear", "1111", 320)
+    eb = EBook("Python Basics", "Eric Matthes", "2222", 5)
 
-    l
+    library.add_book(pb)
+    library.add_book(eb)
+
+    print("Available Books:")
+    for item in library.list_available_books():
+        print(item)
+
+    library.check_out_book("1111")
+
+    print("\nAfter Checkout:")
+    for item in library.list_available_books():
+        print(item)
